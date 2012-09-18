@@ -24,29 +24,4 @@ class AppCallback < FatFreeCRM::Callback::Base
     end
   end
 
-  # Implements application's after_filter hook.
-  #----------------------------------------------------------------------------
-  def app_after_filter(controller, context = {})
-
-    # Only trap leads/create.
-    return unless controller.controller_name == "leads" && controller.action_name == "create"
-
-    # Two more hidden fields specify lead source and redirection URLs:
-    #
-    # <input type="hidden" name="on_success" value="-- success URL here --">
-    # <input type="hidden" name="on_success" value="-- failure URL here --">
-
-    params = controller.params
-    lead = controller.instance_variable_get("@lead")
-
-    #  Note that we can't use usual render() or redirect_to() here since leads
-    #  controller has already rendered the response and/or redirected.
-
-    if lead && !lead.new_record? # Lead record should have been saved by now.
-      controller.response.redirect(params[:on_success], "302") if params[:on_success]
-    else
-      controller.response.redirect(params[:on_failure], "302") if params[:on_failure]
-    end
-  end
-
 end
