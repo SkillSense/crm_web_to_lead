@@ -1,4 +1,4 @@
-RAILS_DEFAULT_LOGGER.info ">> Adding web-to-lead Fat Free CRM plugin..."
+Rails.logger.info ">> Adding web-to-lead Fat Free CRM plugin..."
 
 FatFreeCRM::Plugin.register(:web_to_lead) do
          name "Web-to-lead Capture Fat Free CRM Plugin"
